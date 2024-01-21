@@ -43,55 +43,65 @@
       </div>
     </div>
     <script>
-      const apiKey = "60b915f720ba6a6d2b8de5309f19b115";
-      const apiUrl =
-        "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+    // Definición de la clave de API y la URL de la API de OpenWeatherMap
+    const apiKey = "60b915f720ba6a6d2b8de5309f19b115";
+    const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
 
-      const searchBox = document.querySelector(".search input");
-      const searchButton = document.querySelector(".search button");
-      const weatherIcons = document.querySelector(".weather-icon");
+    // Selección de elementos del DOM
+    const searchBox = document.querySelector(".search input");
+    const searchButton = document.querySelector(".search button");
+    const weatherIcons = document.querySelector(".weather-icon");
 
-      const checkWeather = async (city) => {
+    // Función asíncrona para verificar el clima de una ciudad
+    const checkWeather = async (city) => {
+        // Realizar una solicitud a la API utilizando fetch
         const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
 
-        if (response.status == 404 || searchBox.value == '') {
-          document.querySelector(".error").style.display = "block";
-          document.querySelector(".weather").style.display = "none";
+        // Verificar si la respuesta es un error 404 o si la caja de búsqueda está vacía
+        if (response.status == 404 || searchBox.value == "") {
+            // Mostrar un mensaje de error y ocultar la sección de clima
+            document.querySelector(".error").style.display = "block";
+            document.querySelector(".weather").style.height = "none";
         } else {
-          var data = await response.json();
+            // Procesar la respuesta JSON y guardarla en data
+            let data = await response.json();
 
-          document.querySelector(".city").innerHTML = data.name;
-          document.querySelector(".temp").innerHTML =
-            Math.round(data.main.temp) + " ºC";
-          document.querySelector(".humidity").innerHTML =
-            data.main.humidity + " %";
-          document.querySelector(".wind").innerHTML = data.wind.speed + " Km/h";
+            // Actualizar elementos en el DOM con los datos del clima
+            document.querySelector(".city").innerHTML = data.name;
+            document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + " ºC";
+            document.querySelector(".humidity").innerHTML = data.main.humidity + " %";
+            document.querySelector(".wind").innerHTML = data.wind.speed + " Km/h";
 
-          if (data.weather[0].main == "Clear") {
-            weatherIcons.src = "images/clear.png";
-          } else if (data.weather[0].main == "Clouds") {
-            weatherIcons.src = "images/clouds.png";
-          } else if (data.weather[0].main == "Drizzle") {
-            weatherIcons.src = "images/drizzle.png";
-          } else if (data.weather[0].main == "Humidity") {
-            weatherIcons.src = "images/humidity.png";
-          } else if (data.weather[0].main == "Mist") {
-            weatherIcons.src = "images/mist.png";
-          } else if (data.weather[0].main == "Rain") {
-            weatherIcons.src = "images/rain.png";
-          } else if (data.weather[0].main == "Snow") {
-            weatherIcons.src = "images/snow.png";
-          } else if (data.weather[0].main == "Wind") {
-            weatherIcons.src = "images/wind.png";
-          }
+            // Asignar el ícono del clima basado en la condición meteorológica principal
+            if (data.weather[0].main == "Clear") {
+                weatherIcons.src = "images/clear.png";
+            } else if (data.weather[0].main == "Clouds") {
+                weatherIcons.src = "images/clouds.png";
+            } else if (data.weather[0].main == "Drizzle") {
+                weatherIcons.src = "images/drizzle.png";
+            } else if (data.weather[0].main == "Humidity") {
+                weatherIcons.src = "images/humidity.png";
+            } else if (data.weather[0].main == "Mist") {
+                weatherIcons.src = "images/mist.png";
+            } else if (data.weather[0].main == "Rain") {
+                weatherIcons.src = "images/rain.png";
+            } else if (data.weather[0].main == "Snow") {
+                weatherIcons.src = "images/snow.png";
+            } else if (data.weather[0].main == "Wind") {
+                weatherIcons.src = "images/wind.png";
+            }
 
-          document.querySelector(".weather").style.display = "block";
-          document.querySelector(".error").style.display = "none";
+            // Mostrar la sección de clima y ocultar el mensaje de error
+            document.querySelector(".weather").style.display = "block";
+            document.querySelector(".error").style.display = "none";
         }
-      }
-      searchButton.addEventListener("click", () => {
+    };
+
+    // Agregar un evento click al botón de búsqueda para invocar la función checkWeather
+    searchButton.addEventListener("click", () => {
         checkWeather(searchBox.value);
-      });
+    });
+
     </script>
   </body>
 </html>
