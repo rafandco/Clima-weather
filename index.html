@@ -101,7 +101,7 @@
             data.main.humidity + " %";
           document.querySelector(".wind").innerHTML = data.wind.speed + " Km/h";
 
-          // Asignar el ícono del clima basado en la condición meteorológica principal
+          // Asignar el icono del clima basado en la condición meteorológica principal
           if (data.weather[0].main == "Clear") {
             weatherIcons.src = "images/clear.png";
           } else if (data.weather[0].main == "Clouds") {
